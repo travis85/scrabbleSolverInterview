@@ -1,0 +1,192 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Scrabble Words</title>
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="sowpods.txt"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+</script>
+
+<script  >
+
+  $(document).ready(() =>{
+
+    $("#enter").click(() => {
+
+      const RndomLetters = $("#string").val()
+      function scrabbleMatch(randomString){
+    const word = sowWords
+
+    // const word = words
+    const splitString = randomString.toUpperCase();
+    let words = []
+
+    for (let i = 0; i < word.length; i++){
+        if(word[i].length <= splitString.length){
+            words.push(word[i])
+        }
+    }
+
+    function isWordValid(validLetters, attemptedWord) {
+        const validLettersSplitted = validLetters.split("")
+        const attemptedWordSplitted = attemptedWord.split("")
+
+        return attemptedWordSplitted.every(attemptedLetter => {
+            const letterIndex = validLettersSplitted.indexOf(attemptedLetter)
+            if(validLettersSplitted.includes('_') && letterIndex === -1){
+                validLettersSplitted.splice(letterIndex, 1)
+                return true
+            } else if(letterIndex > -1 ){
+                validLettersSplitted.splice(letterIndex, 1)
+                return true
+            } else {
+                return false
+            }
+        });  
+            
+    }
+
+    let validWords = []
+    for(let i = 0; i < words.length; i++){
+        if(isWordValid(splitString, words[i]) === true){
+            validWords.push(words[i])
+        }
+    }
+
+    function Blank(randString,list){
+        let cL = list.split('')
+        let sL = randString.split('')
+        for(let i = 0; i < cL.length; i++){
+            for(let j = 0; j < sL.length; j++){
+                if (cL[i] === sL[j]){
+                    cL.splice([i],[i+1])
+                }   
+            }
+        }
+        return cL
+    }
+
+
+    function scores(word){
+        let letterCount = 0
+        for(let i = 0; i < word.length; i++){
+            if(word[i].match(/[AEILNORSTU]/)){
+                letterCount += 1;
+            } else if(word[i].match(/[DG]/)){
+                letterCount += 2;
+            } else if(word[i].match(/[BCM]/)){
+                letterCount += 3;
+            } else if(word[i].match(/[FHVWY]/)){
+                letterCount += 4;
+            } else if(word[i].match(/[K]/)){
+                letterCount += 5;
+            } else if(word[i].match(/[JX]/)){
+                letterCount += 8;
+            } else if(word[i].match(/[QZ]/)){
+                letterCount += 10;
+            } 
+            
+        }
+        
+        return letterCount
+    }
+
+    let addedScores = [];
+
+    for (let i = 0; i < validWords.length; i++){
+            
+        addedScores.push([validWords[i],scores(validWords[i]) - scores(Blank(randomString,validWords[i]))])
+
+    }
+    return addedScores    
+}
+
+
+
+
+      console.log(scrabbleMatch(RndomLetters))
+
+      // $("#word").append(x)
+    })
+
+  })
+</script>
+
+
+ 
+</head>
+<body class="place-items-center mt-[10%]"  >
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFnh5N5cbjvdkLM1Mbll6fkiqbD04SGMw",
+      authDomain: "scabblewords.firebaseapp.com",
+      projectId: "scabblewords",
+      storageBucket: "scabblewords.appspot.com",
+      messagingSenderId: "310258895661",
+      appId: "1:310258895661:web:5b55fad7288d12591fe1a4",
+      measurementId: "G-M7VZXQ6HXF"
+    };
+    const app = initializeApp(firebaseConfig);
+    </script>
+
+
+  
+    <div class="container mx-auto m-10 flex flex-row justify-center justify-evenly  content-center" >
+        <div class="border-4 border-black flex flex-col m-w-20 p-6 m-8 items-center">
+          <form action="/Users/travis/Library/Mobile Documents/com~apple~CloudDocs/underdogDev/mentorDev folder /udd-resources/dropBoxRedo/scrabbleSolverInterview/index.html" method="GET">
+
+          <div class="border border-black mb-3">
+              <input type="text" id="string" placeholder="Enter Letters">
+
+          </div>
+        </form>
+
+          <div class="">
+            <button class="border-2 border-solid border-gray-700" id="enter">Enter</button>
+          </div>
+        </div>      
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg" >
+          <table class="w-full text-sm text-left text-white">
+              <thead class="text-xs text-white uppercase bg-gray-50 dark:bg-gray-700 ">
+              <tr>
+              <th scope="col" class="px-6 py-3" >Word</th>
+              <th scope="col" class="px-6 py-3">Score</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <td id="word" class="px-6 py-4">Example 1</td><td id="score" class="px-6 py-4">15</td>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td id="word" class="px-6 py-4">Example 1</td><td id="score" class="px-6 py-4">15</td>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <td id="word" class="px-6 py-4">Example 1</td><td id="score" class="px-6 py-4">15</td>
+      
+              </tr>
+              
+              </tbody>
+              
+              </table>
+  
+        </div>
+   
+      </div>
+
+      <!-- <script type="module" src="./index.js"></script> -->
+    
+</body>
+</html>
+
+
+

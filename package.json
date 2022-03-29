@@ -1,0 +1,16 @@
+{
+  "name": "scrabblesolverinterview",
+  "version": "1.0.0",
+  "description": "scrabble App",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase": "^9.6.10"
+  }
+}
