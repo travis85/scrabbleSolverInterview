@@ -2,13 +2,16 @@
 //load from url fetch intead fs..
 // const fs = require('fs')
 // const sowpods = fs.readFileSync('./sowpods.txt','utf-8');
- import 'regenerator-runtime/runtime';
+//  const runtime = require('regenerator-runtime/runtime');
 const axios = require('axios');
+// const url = require('url');
 
 exports.ScrabbleMatch = async function(randomString){
     // const word = sowWords
-    const sowpods = await axios.get(`/sowpods.txt`)
-    const word = sowpods.split('\n');
+    const sowpods = await axios.get("http://localhost:3000/sowpods")
+
+    // const sowpods = await axios.get(`${process.env.BASE_URL}/sowpods`) // use dotenv in the future :) 
+    const word = sowpods.data.split('\n');
 
     const splitString = randomString.toUpperCase();
     let words = []
@@ -17,6 +20,7 @@ exports.ScrabbleMatch = async function(randomString){
             words.push(word[i])
         }
     }
+
     function isWordValid(validLetters, attemptedWord) {
         const validLettersSplitted = validLetters.split("")
         const attemptedWordSplitted = attemptedWord.split("")
@@ -76,8 +80,9 @@ exports.ScrabbleMatch = async function(randomString){
     for (let i = 0; i < validWords.length; i++){
         addedScores.push([validWords[i],scores(validWords[i]) - scores(Blank(randomString,validWords[i]))])
     }
-    return addedScores    
+    // addedScores = JSON.stringify(addedScores.flat())  
+    console.log(addedScores)
+    return addedScores
 }
-
 
     
