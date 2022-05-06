@@ -1,11 +1,15 @@
 
+//load from url fetch intead fs..
+// const fs = require('fs')
+// const sowpods = fs.readFileSync('./sowpods.txt','utf-8');
+ import 'regenerator-runtime/runtime';
+const axios = require('axios');
 
-const fs = require('fs')
-const sowpods = fs.readFileSync('./sowpods.txt','utf-8');
-const sowWords = sowpods.split('\n');
+exports.ScrabbleMatch = async function(randomString){
+    // const word = sowWords
+    const sowpods = await axios.get(`/sowpods.txt`)
+    const word = sowpods.split('\n');
 
-exports.ScrabbleMatch = function(randomString){
-    const word = sowWords
     const splitString = randomString.toUpperCase();
     let words = []
     for (let i = 0; i < word.length; i++){

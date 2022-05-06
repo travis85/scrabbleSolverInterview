@@ -26,7 +26,7 @@
       $("#enter").click(async function(){
 
         let randomLetters = $("#string").val()
-        const result = await axios.get(`http://localhost:3000/scrabble?q=${randomLetters}`)
+        const result = await axios.get(`/scrabble?q=${randomLetters}`)
 
         result.data.forEach(word => {
           let i = 0

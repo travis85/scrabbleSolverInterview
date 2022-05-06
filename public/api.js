@@ -8,18 +8,21 @@ const { ScrabbleMatch } = require('./scrabble.js')
 app.use(bodyParser.urlencoded())// for endpoints
 // app.use(js.scrabbleMatch())
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/index.html'));
+});
 
-})
 app.get('/scrabble', (req, res) => {
   const letters = req.query.q
   res.send(ScrabbleMatch(letters))
 })
+app.get('/sowpods',(req, res)=>{
+  res.sendFile(path.join(__dirname, '/sowpods.txt'));
+
+})
 
 
-
-app.listen(3000, () => {
+app.listen('3000', () => {
   console.log(`Example app listening`)
 })
 
