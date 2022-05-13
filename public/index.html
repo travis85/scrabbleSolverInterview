@@ -22,14 +22,14 @@
   <!-- JS -->
   <script>
     $(document).ready(function(){
+      
 
       $("#enter").click(async function(){
 
         let randomLetters = $("#string").val()
         const result = await axios.get(`/scrabble?q=${randomLetters}`)
-        console.log(result.data)
-
-        Array.from(result.data).forEach(word => {
+        console.log(result)
+        result.data.forEach(word => {
           let i = 0
           let j = 1
           $("#myTable>tbody").append(`<tr><td>${word[i]}</td><td>${word[j]}</td></tr>`);

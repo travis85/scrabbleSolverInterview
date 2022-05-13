@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express()
 // const url = require('url');
-const { ScrabbleMatch } = require('./scrabble.js');
+const { ScrabbleMatch } = require('../functions/scrabble.js');
 
 
 app.use(bodyParser.urlencoded({extended: true}))// for endpoints
